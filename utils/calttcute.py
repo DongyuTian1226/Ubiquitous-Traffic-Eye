@@ -12,20 +12,17 @@ import pandas as pd
 import os
 
 
-# An example for UTE
-laneid = 'LaneID'
-carid = 'VehicleID'
-time = 'Time(s)'
-longitude = 'x-axis position(m)'
-carlength = 'VehicleLength(meter)'
-speed = 'Speed(m/s)'
-
-
 class CalTTC:
-    def __init__(self, file_path, out_path, minttc_path):
+    def __init__(self, file_path, out_path, minttc_path, param_dict):
         self.file_dir = file_path
         self.out_file_dir = out_path
         self.minttc_dir = minttc_path
+        self.laneid = param_dict[laneid]
+        self.carid = param_dict[carid]
+        self.time = param_dict[time]
+        self.longitude = param_dict[longitude]
+        self.carlength = param_dict[carlength]
+        self.speed = param_dict[speed]
 
     def addttc(self, file_path, out_file_path):
         """
@@ -40,18 +37,18 @@ class CalTTC:
 
         datax = pd.read_csv(file_path)
         results = []
-        datax.sort_values(by=[laneid, time, longitude], inplace=True)
-        for lane, data_lane in datax.groupby(datax[laneid]):
+        datax.sort_values(by=[self.laneid, self.time, self.longitude], inplace=True)
+        for lane, data_lane in datax.groupby(datax[self.laneid]):
             logo_car = data_lane.iloc[0][carid]
-            logo_data_1 = data_lane.loc[data_lane[carid] == logo_car,
-                                        longitude].iloc[0]
-            logo_data_2 = data_lane.loc[data_lane[carid] == logo_car,
-                                        longitude].iloc[-1]
+            logo_data_1 = data_lane.loc[data_lane[self.carid] == logo_car,
+                                        self.longitude].iloc[0]
+            logo_data_2 = data_lane.loc[data_lane[self.carid] == logo_car,
+                                        self.longitude].iloc[-1]
             logo = logo_data_1 - logo_data_2
-            for frame, data_frame in data_lane.groupby(data_lane[time]):
+            for frame, data_frame in data_lane.groupby(data_lane[self.time]):
                 ttc_sequence, followid = self.cal_ttc(
-                    data_frame[longitude].values, data_frame[speed].values,
-                    data_frame[carid].values, data_frame[carlength].values,
+                    data_frame[self.longitude].values, data_frame[self.speed].values,
+                    data_frame[self.carid].values, data_frame[self.carlength].values,
                     logo)
                 data_frame["TTC"] = ttc_sequence
                 data_frame["Followid"] = followid
@@ -121,10 +118,10 @@ class CalTTC:
         after_ttc = []
 
         df = pd.read_csv(file_path)
-        for ID, grouped in df.groupby(carid):
-            grouped.sort_values(by=[time])
+        for ID, grouped in df.groupby(self.carid):
+            grouped.sort_values(by=[self.time])
             for i in range(len(grouped) - 1):
-                if grouped.iloc[i][laneid] != grouped.iloc[i + 1][laneid]:
+                if grouped.iloc[i][self.laneid] != grouped.iloc[i + 1][self.laneid]:
                     before_followid = grouped.iloc[i]['Followid']
                     after_followid = grouped.iloc[i + 1]['Followid']
                     before_min = grouped.loc[grouped['Followid']
@@ -177,5 +174,13 @@ if __name__ == '__main__':
     folder_path = r'E://UTEdata//alldata3'
     output_dir = r'E://UTEdata//try'
     minttc_dir = r'E://UTEdata//tryttc'
-    calttcute = CalTTC(folder_path, output_dir, minttc_dir)
+    param_dict = {
+        'laneid': 'LaneID',
+        'carid': 'VehicleID',
+        'time': 'Time(s)',
+        'longitude': 'x-axis position(m)',
+        'carlength': 'VehicleLength(meter)',
+        'speed': 'Speed(m/s)'
+    }
+    calttcute = CalTTC(folder_path, output_dir, minttc_dir, param_dict)
     calttcute.traverse_folder()
