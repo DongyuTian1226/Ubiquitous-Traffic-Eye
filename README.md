@@ -19,7 +19,7 @@ Data available for download from this website include: video files with object i
 | [<b>RML</b><br />RML-7](https://github.com/Ruyi-Feng/Ubiquitous-Traffic-Eye/tree/UTE/datasets/RML/RML-7) |  [<b>PKDD</b><br /> PKDD-8](https://github.com/Ruyi-Feng/Ubiquitous-Traffic-Eye/tree/UTE/datasets/PKDD/PKDD-8)
 ![](https://github.com/Ruyi-Feng/Ubiquitous-Traffic-Eye/tree/UTE/datasets/RML/blurred-map.png) |   ![](https://github.com/Ruyi-Feng/Ubiquitous-Traffic-Eye/tree/UTE/datasets/PKDD/blurred-map.png)
 | [<b>XAM-S</b><br />XAM-S-9](https://github.com/Ruyi-Feng/Ubiquitous-Traffic-Eye/tree/UTE/datasets/XAM-S/XAM-S-9) | 
-![](https://github.com/Ruyi-Feng/Ubiquitous-Traffic-Eye/tree/UTE/datasets/XAM-S-9/blurred-map.png) |
+![](https://github.com/Ruyi-Feng/Ubiquitous-Traffic-Eye/tree/UTE/datasets/XAM-S/blurred-map.png) |
 
 
 
