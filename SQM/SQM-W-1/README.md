@@ -5,7 +5,7 @@ This markdown includes Chinese version and English version.
 当前站点数据集仅公开部分sample样例数据。本站点全面数据待公开。
 
 ### 采集路段
-**采集地点经纬度：**32.005548 ,118.789275
+<b>采集地点经纬度：</b>32.005548 ,118.789275
 
 **路段类型：**分/合流区
 
